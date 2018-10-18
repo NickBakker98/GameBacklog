@@ -62,21 +62,16 @@ public class gameObjectAdapter extends RecyclerView.Adapter<gameObjectAdapter.ga
 
         //final GameObject gameObject = listGameObject.get(position);
         final GameObject gameobject = listGameObject.get(position);
-        holder.gameTitle.setText(gameobject.getmTitle());
-        holder.gamePlatform.setText(gameobject.getmPlatform());
-        holder.gameDate.setText(gameobject.getmDate());
-        holder.gameStatus.setText(gameobject.getmStatus());
+        holder.gameTitle.setText(gameobject.getTitle());
+        holder.gamePlatform.setText(gameobject.getPlatform());
+        holder.gameDate.setText(gameobject.getDate());
+        holder.gameStatus.setText(gameobject.getStatus());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int clickedPosition = position;
                 mGameClickListener.gameOnClick(clickedPosition);
-
-//                GameObject addData = listGameObject.get(position);
-//                Intent i = new Intent(context, EditGameActivity.class);
-//                i.putExtra(EXTRA_GAME, addData);
-//                i.putExtra("position",position);
             }
         });
     }
@@ -84,6 +79,16 @@ public class gameObjectAdapter extends RecyclerView.Adapter<gameObjectAdapter.ga
     @Override
     public int getItemCount(){
         return listGameObject.size();
+    }
+
+
+    public void swapList (List<GameObject> newList) {
+        listGameObject = newList;
+        if (newList != null) {
+            // Force the RecyclerView to refresh
+            this.notifyDataSetChanged();
+        }
+
     }
 
 

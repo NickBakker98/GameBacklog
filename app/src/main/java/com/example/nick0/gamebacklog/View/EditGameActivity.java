@@ -47,9 +47,9 @@ public class EditGameActivity extends AppCompatActivity {
         Notes_input = findViewById(R.id.edit_notes);
         Status_input = findViewById(R.id.edit_status);
 
-        Title_input.setText(editGames.getmTitle());
-        Platform_input.setText(editGames.getmPlatform());
-        Notes_input.setText(editGames.getmNotes());
+        Title_input.setText(editGames.getTitle());
+        Platform_input.setText(editGames.getPlatform());
+        Notes_input.setText(editGames.getNotes());
 
         edit_addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,11 +72,11 @@ public class EditGameActivity extends AppCompatActivity {
                     return;
                 }
 
-                editGames.setmTitle(Title);
-                editGames.setmPlatform(Platform);
-                editGames.setmNotes(Note);
-                editGames.setmStatus(Status);
-                editGames.setmDate(datum);
+                editGames.setTitle(Title);
+                editGames.setPlatform(Platform);
+                editGames.setNotes(Note);
+                editGames.setStatus(Status);
+                editGames.setDate(datum);
 
                 Intent data = new Intent();
                 data.putExtra(EXTRA_GAME,editGames);
