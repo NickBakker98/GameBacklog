@@ -25,7 +25,8 @@ public class gameObjectAdapter extends RecyclerView.Adapter<gameObjectAdapter.ga
 
     private Context context;
     public List<GameObject> listGameObject;
-    public static final String EXTRA_POSITION = "position";
+    public static final int EXTRA_POSITION = 0;
+    final private GameClickListener mGameClickListener;
 
     //Now for the Cardview
     public class gameObjectViewHolder extends RecyclerView.ViewHolder {
@@ -40,9 +41,14 @@ public class gameObjectAdapter extends RecyclerView.Adapter<gameObjectAdapter.ga
         }
     }
 
-    public gameObjectAdapter(Context context, List<GameObject> listGameObject) {
+    public interface GameClickListener{
+        void gameOnClick (int i);
+    }
+
+    public gameObjectAdapter(List<GameObject> listGameObject,GameClickListener mGameClickListener) {
         this.context = context;
         this.listGameObject = listGameObject;
+        this.mGameClickListener = mGameClickListener;
     }
 
     @Override
@@ -64,12 +70,13 @@ public class gameObjectAdapter extends RecyclerView.Adapter<gameObjectAdapter.ga
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GameObject addData = listGameObject.get(position);
+                int clickedPosition = position;
+                mGameClickListener.gameOnClick(clickedPosition);
 
-                Intent i = new Intent(context, EditGameActivity.class);
-                i.putExtra(EXTRA_GAME, addData);
-                i.putExtra(EXTRA_POSITION, position);
-                context.startActivity(i);
+//                GameObject addData = listGameObject.get(position);
+//                Intent i = new Intent(context, EditGameActivity.class);
+//                i.putExtra(EXTRA_GAME, addData);
+//                i.putExtra("position",position);
             }
         });
     }

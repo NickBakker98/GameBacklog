@@ -20,13 +20,20 @@ import com.example.nick0.gamebacklog.Util.gameObjectAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+import static com.example.nick0.gamebacklog.Util.gameObjectAdapter.EXTRA_POSITION;
+import static com.example.nick0.gamebacklog.View.EditGameActivity.NICK;
+
+public class MainActivity extends AppCompatActivity implements gameObjectAdapter.GameClickListener {
 
     //Declaring the variables.
     private RecyclerView recyclerview;
     private FloatingActionButton addButton;
     List<GameObject> gameObjects = new ArrayList<>();
-    gameObjectAdapter mAdapter = new gameObjectAdapter(this, gameObjects);
+    gameObjectAdapter mAdapter = new gameObjectAdapter(gameObjects, this);
+    //Constants used when calling the update activity
+    public static final String EXTRA_GAME = "Game";
+    public static final int REQUESTCODE = 1234;
+    private int mModifyPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,13 +79,35 @@ public class MainActivity extends AppCompatActivity {
         itemTouchHelper.attachToRecyclerView(recyclerview);
     }
 
+
+    @Override
+    public void gameOnClick(int i) {
+        Intent intent2 = new Intent(MainActivity.this, EditGameActivity.class);
+        mModifyPosition = i;
+        GameObject nick = gameObjects.get(i);
+        intent2.putExtra(EXTRA_GAME, nick);
+        intent2.putExtra("position", mModifyPosition);
+        startActivityForResult(intent2, 2);
+    }
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (resultCode == RESULT_OK) {
-            GameObject game = data.getParcelableExtra(AddGameActivity.EXTRA_GAME);
-            gameObjects.add(game);
-            mAdapter.notifyDataSetChanged();
+        GameObject game = data.getParcelableExtra(AddGameActivity.EXTRA_GAME);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                gameObjects.add(game);
+                mAdapter.notifyDataSetChanged();
+            }
+        }
+        GameObject game2 = data.getParcelableExtra(EditGameActivity.NICK);
+        if (requestCode == 2) {
+            if (resultCode == RESULT_OK) {
+                int position = data.getIntExtra("position", 0);
+                gameObjects.set(position, game);
+                mAdapter.notifyDataSetChanged();
+            }
         }
     }
 }

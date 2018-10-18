@@ -30,13 +30,16 @@ public class EditGameActivity extends AppCompatActivity {
     private EditText Notes_input;
     private Spinner Status_input;
 
+    public static final String NICK = "key";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_);
 
-        final GameObject editGames = getIntent().getParcelableExtra(EXTRA_GAME);
+        final GameObject editGames = getIntent().getParcelableExtra(MainActivity.EXTRA_GAME);
+        final int position = getIntent().getIntExtra("position", -1);
 
         edit_addButton = findViewById(R.id.save_addButton);
         Title_input = findViewById(R.id.edit_title);
@@ -77,6 +80,7 @@ public class EditGameActivity extends AppCompatActivity {
 
                 Intent data = new Intent();
                 data.putExtra(EXTRA_GAME,editGames);
+                data.putExtra("position", position);
                 setResult(Activity.RESULT_OK,data);
                 finish();
             }
