@@ -28,7 +28,6 @@ public class gameObjectAdapter extends RecyclerView.Adapter<gameObjectAdapter.ga
     public static final int EXTRA_POSITION = 0;
     final private GameClickListener mGameClickListener;
 
-    //Now for the Cardview
     public class gameObjectViewHolder extends RecyclerView.ViewHolder {
         public TextView gameTitle, gamePlatform, gameDate, gameStatus;
 
@@ -60,7 +59,6 @@ public class gameObjectAdapter extends RecyclerView.Adapter<gameObjectAdapter.ga
     @Override
     public void onBindViewHolder(final gameObjectViewHolder holder, final int position) {
 
-        //final GameObject gameObject = listGameObject.get(position);
         final GameObject gameobject = listGameObject.get(position);
         holder.gameTitle.setText(gameobject.getTitle());
         holder.gamePlatform.setText(gameobject.getPlatform());

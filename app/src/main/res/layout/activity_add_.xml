@@ -37,7 +37,7 @@
                 android:inputType="textPersonName" />
 
             <EditText
-                android:id="@+id/Input_platform"
+                android:id="@+id/input_platform"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:ems="10"
@@ -45,7 +45,7 @@
                 android:inputType="textPersonName" />
 
             <EditText
-                android:id="@+id/Input_notes"
+                android:id="@+id/input_notes"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:ems="10"

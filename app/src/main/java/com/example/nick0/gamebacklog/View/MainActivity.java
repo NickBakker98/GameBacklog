@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements gameObjectAdapter
         addButton = findViewById(R.id.addButton);
         recyclerview = findViewById(R.id.recycler_view);
 
+        //Create database instance.
         db = AppDatabase.getInstance(this);
         new GameObjectAsyncTask(TASK_GET_ALL_GAMES).execute();
 
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements gameObjectAdapter
             }
         });
 
+        //Layout for the RecyclerView.
         RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
         recyclerview.setLayoutManager(mLayoutManager);
         recyclerview.setAdapter(mAdapter);
@@ -73,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements gameObjectAdapter
                 return false;
             }
 
+            //Deleting the games by swiping.
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
                 int position = (viewHolder.getAdapterPosition());
@@ -88,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements gameObjectAdapter
         itemTouchHelper.attachToRecyclerView(recyclerview);
     }
 
-
+    //OnClickListener for the RecyclerView to the EditGameActivity.
     @Override
     public void gameOnClick(int i) {
         Intent intent2 = new Intent(MainActivity.this, EditGameActivity.class);
@@ -99,10 +102,13 @@ public class MainActivity extends AppCompatActivity implements gameObjectAdapter
         startActivityForResult(intent2, 2);
     }
 
-
+    //Getting the data from the AddGameActivity or the EditGameActivity.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        if(resultCode != RESULT_OK){
+            return;
+        }
         GameObject game = data.getParcelableExtra(AddGameActivity.EXTRA_GAME);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
@@ -123,21 +129,17 @@ public class MainActivity extends AppCompatActivity implements gameObjectAdapter
     }
 
     public void onGameDbUpdated(List list) {
-
         gameObjects = list;
         mAdapter.swapList(gameObjects);
-
     }
 
     public class GameObjectAsyncTask extends AsyncTask<GameObject, Void, List> {
-
         private int taskCode;
-
         public GameObjectAsyncTask(int taskCode) {
             this.taskCode = taskCode;
         }
 
-
+        //Different tasks for the database.
         @Override
         protected List doInBackground(GameObject... gameobjects) {
             switch (taskCode) {
@@ -154,7 +156,6 @@ public class MainActivity extends AppCompatActivity implements gameObjectAdapter
                     break;
             }
 
-            //To return a new list with the updated data, we get all the data from the database again.
             return db.gameObjectDao().getAllGameObject();
         }
         @Override

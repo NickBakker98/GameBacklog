@@ -21,6 +21,7 @@ import java.util.Date;
 
 public class AddGameActivity extends AppCompatActivity {
 
+    //Initialize the variables.
     private FloatingActionButton save_addButton;
     private EditText titleInput;
     private EditText platformInput;
@@ -31,6 +32,7 @@ public class AddGameActivity extends AppCompatActivity {
     private String mNote;
     private String mStatus;
 
+    //Create a key for sending data to other Activity.
     public static final String EXTRA_GAME = "game";
 
     @Override
@@ -38,16 +40,19 @@ public class AddGameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_);
 
+        //Linking variables to xml.file.
         save_addButton = findViewById(R.id.save_addButton);
         titleInput = findViewById(R.id.input_title);
-        platformInput = findViewById(R.id.Input_platform);
-        notesInput = findViewById(R.id.Input_notes);
+        platformInput = findViewById(R.id.input_platform);
+        notesInput = findViewById(R.id.input_notes);
         statusInput = findViewById(R.id.game_spinner);
 
+        //Create OnClickListener for the fab.
         save_addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                //Create new date.
                 Date mDate = new Date();
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 String date = dateFormat.format(mDate);
@@ -64,6 +69,7 @@ public class AddGameActivity extends AppCompatActivity {
                     return;
                 }
 
+                //Adding the data and send it to the MainActivity.
                 GameObject addData = new GameObject(mTitle, mPlatform, mNote, mStatus, datum);
                 Intent data = new Intent();
                 data.putExtra(EXTRA_GAME, addData);
