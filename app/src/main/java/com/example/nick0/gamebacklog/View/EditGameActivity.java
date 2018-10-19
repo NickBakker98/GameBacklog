@@ -24,6 +24,7 @@ import static com.example.nick0.gamebacklog.View.AddGameActivity.EXTRA_GAME;
 
 public class EditGameActivity extends AppCompatActivity {
 
+    //Initialize the variables.
     private FloatingActionButton edit_addButton;
     private EditText Title_input;
     private EditText Platform_input;
@@ -32,29 +33,33 @@ public class EditGameActivity extends AppCompatActivity {
 
     public static final String NICK = "key";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_);
 
+        //Get the data and the position of the games from the MainActivity.
         final GameObject editGames = getIntent().getParcelableExtra(MainActivity.EXTRA_GAME);
         final int position = getIntent().getIntExtra("position", -1);
 
+        //Linking variables to the xml.file.
         edit_addButton = findViewById(R.id.save_addButton);
         Title_input = findViewById(R.id.edit_title);
         Platform_input = findViewById(R.id.edit_platform);
         Notes_input = findViewById(R.id.edit_notes);
         Status_input = findViewById(R.id.edit_status);
 
+        //Put the text which was added in the AddGameActivity in the fields, so it can be edited.
         Title_input.setText(editGames.getTitle());
         Platform_input.setText(editGames.getPlatform());
         Notes_input.setText(editGames.getNotes());
 
+        //Create OnClickListener for the fab, which navigates back to the MainActivity.
         edit_addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                //Creating a new date.
                 Date mDate = new Date();
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 String date = dateFormat.format(mDate);
@@ -72,12 +77,14 @@ public class EditGameActivity extends AppCompatActivity {
                     return;
                 }
 
+                //Putting data in the editGames.
                 editGames.setTitle(Title);
                 editGames.setPlatform(Platform);
                 editGames.setNotes(Note);
                 editGames.setStatus(Status);
                 editGames.setDate(datum);
 
+                //Put the data from editGames back in the EXTRA_GAME.
                 Intent data = new Intent();
                 data.putExtra(EXTRA_GAME,editGames);
                 data.putExtra("position", position);
